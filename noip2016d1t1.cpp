@@ -30,7 +30,8 @@ void solve(){
 	printf("%s\n",job[lst]);
 }
 int main(){
+	freopen("a.in","r",stdin);
 	init();
 	solve();
 	return 0;
-} 
+}
