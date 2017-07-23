@@ -26,7 +26,7 @@ int att[MAXN]={0},tot[MAXN],_nextt[MAXN],Cntt=0;
 //自己是LCA时存T的深度 
 int m,ans[MAXN],w[MAXN],c[MAXN]={0};
 //ans答案 w出现时间 cS人数 
-int down[MAXN],up[MAXN*2]={0};
+int down[MAXN*2],up[MAXN*2]={0};
 //up S->LCA down LCA->T（可能有负数） 
 void addedge(int _u,int _v){
 	to[++Cnt]=_v,_next[Cnt]=at[_u],at[_u]=Cnt;
@@ -60,28 +60,29 @@ int query(int u,int v){
 			u=par[u][i],v=par[v][i];
 	return par[u][0];
 }
+//倍增求解LCA
+
 void dfs(int cur){
 	//主要求解过程 
 	int up_ans=up[depth[cur]+w[cur]],
 	down_ans=down[depth[cur]-w[cur]+MAXN];
 	//旧的答案
 	up[depth[cur]]+=c[cur];
+	//作为S，添加自己
 	for(int i=at2[cur];i;i=_next2[i])
 		down[to2[i]+MAXN]++;
-	//添加自己的S,T 
+	//作为T，添加自己的信息 
 	for(int i=at[cur];i;i=_next[i])
 		if(to[i]!=par[cur][0])dfs(to[i]);
 	//搜索子树
-	ans[cur]=up[depth[cur]+w[cur]]+down[depth[cur]-w[cur]+MAXN]
-	-up_ans-down_ans;
+	ans[cur]=up[depth[cur]+w[cur]]+down[depth[cur]-w[cur]+MAXN]-up_ans-down_ans;
 	//利用DFS性质计算自己的答案 
 	for(int i=ats[cur];i;i=_nexts[i]){
-		up[tos[i]]--;
-		if(tos[i]==depth[cur]+w[cur])ans[cur]--;
-		//链状 
+		up[tos[i]]--;//回溯时删去S
+		if(tos[i]==depth[cur]+w[cur])ans[cur]--;//如果S就是LCA，那么答案重复，减掉1个
 	}
 	for(int i=att[cur];i;i=_nextt[i])
-		down[tot[i]+MAXN]--;
+		down[tot[i]+MAXN]--;//作为LCA，回溯时删去T
 }
 void init(){
 	n=read(),m=read();
