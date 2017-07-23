@@ -26,7 +26,7 @@ int att[MAXN]={0},tot[MAXN],_nextt[MAXN],Cntt=0;
 //自己是LCA时存T的深度 
 int m,ans[MAXN],w[MAXN],c[MAXN]={0};
 //ans答案 w出现时间 cS人数 
-int down[MAXN*2],up[MAXN*2]={0};
+int down[MAXN],up[MAXN*2]={0};
 //up S->LCA down LCA->T（可能有负数） 
 void addedge(int _u,int _v){
 	to[++Cnt]=_v,_next[Cnt]=at[_u],at[_u]=Cnt;
@@ -69,12 +69,12 @@ void dfs(int cur){
 	//旧的答案
 	up[depth[cur]]+=c[cur];
 	//作为S，添加自己
-	for(int i=at2[cur];i;i=_next2[i])
-		down[to2[i]+MAXN]++;
-	//作为T，添加自己的信息 
 	for(int i=at[cur];i;i=_next[i])
 		if(to[i]!=par[cur][0])dfs(to[i]);
 	//搜索子树
+	for(int i=at2[cur];i;i=_next2[i])
+		down[to2[i]+MAXN]++;
+	//作为T，添加自己的信息 
 	ans[cur]=up[depth[cur]+w[cur]]+down[depth[cur]-w[cur]+MAXN]-up_ans-down_ans;
 	//利用DFS性质计算自己的答案 
 	for(int i=ats[cur];i;i=_nexts[i]){
@@ -105,8 +105,9 @@ void init(){
 }
 void solve(){
 	dfs(1);
-	for(int i=1;i<=n;i++)
+	for(int i=1;i<n;i++)
 		printf("%d ",ans[i]);
+	printf("%d\n",ans[n]);
 }
 int main(){
 	init();
