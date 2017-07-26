@@ -44,3 +44,44 @@ int main(){
     printf("%d %d\n",ans2,ans);
     return 0;
 }
+
+//upd:2017.7.26
+//以上代码会被某些特殊数据卡住
+//以下代码没问题
+
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <algorithm> 
+#define M 10007
+using namespace std;
+int to[400005],nex[400005],at[200005],cnt=0;
+int n,ans=0,ans2=0,val[200005];
+void dfs(int cur,int fa){
+	int sum=0,sum2=0,mx=0,mx2=0,v;
+    for(int i=at[cur];i;i=nex[i]){
+    	if(to[i]==fa)continue;
+    	v=val[to[i]],
+        sum=(sum+v)%M,
+        sum2=(sum2+(v*v)%M)%M;
+        if(v>mx)mx2=mx,mx=v;
+        else if(v>mx2)mx2=v;
+        dfs(to[i],cur);
+	}
+    ans2=max(ans2,max(mx*mx2,mx*val[fa])),
+    ans=(ans+(val[fa]*sum*2)%M)%M,
+    ans=(ans+(sum*sum-sum2)%M+M)%M; 
+}
+int main(){
+    scanf("%d",&n);
+    int i,u,v;
+    for(i=1;i<n;i++){
+        scanf("%d%d",&u,&v);
+        to[++cnt]=v,nex[cnt]=at[u],at[u]=cnt;
+        to[++cnt]=u,nex[cnt]=at[v],at[v]=cnt;
+    }
+    for(i=1;i<=n;i++)scanf("%d",&val[i]);
+    dfs(1,0);
+    printf("%d %d\n",ans2,ans);
+    return 0;
+}
