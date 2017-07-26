@@ -4,12 +4,11 @@
 #include <algorithm>
 #include <cmath>
 using namespace std;
+typedef long long ll;
 int q1[100005]={0},q2[7000005],q3[7000005],n,m,q,u,v,t;
 int f1=0,f2=0,f3=0,r1=0,r2=0,r3=0;
-double xs,tmp;
 int main(){
     scanf("%d%d%d%d%d%d",&n,&m,&q,&u,&v,&t);
-    xs=u,xs/=(double)v;
     int i,j,k,maxi,_max,fi,se,ok=0;
     for(i=0;i<n;i++)
         scanf("%d",&q1[i]);
@@ -28,8 +27,9 @@ int main(){
             if(ok)printf(" ");
             ok=1,printf("%d",_max);
         }
-        tmp=_max,tmp*=xs;
-        fi=(int)floor(tmp),se=_max-fi;
+        ll ta=_max,tb=_max;
+        ta*=(ll)u,ta/=(ll)v;//这里不要用浮点数，否则被卡精度
+        fi=(int)ta,se=(int)(tb-ta);
         q2[r2++]=fi-(i+1)*q,
         q3[r3++]=se-(i+1)*q;
     }
