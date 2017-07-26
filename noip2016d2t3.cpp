@@ -6,7 +6,7 @@
 using namespace std;
 int T,n,m,tag,tab[20][500];
 int in[20][1<<19];
-double pos[20][2],eps=1e-8;
+double pos[20][2],eps=1e-11;//eps的精度太高会挂（判不出直线），太小也会挂（判不出不同的抛物线）
 int jfc(double &a,double &b,int i,int j){
     if(pos[i][0]<pos[j][0])swap(i,j);
     if(fabs(pos[i][0]-pos[j][0])<eps)return -1;//x坐标相同 
