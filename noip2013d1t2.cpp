@@ -8,7 +8,6 @@ using namespace std;
 int a[100005],b[100005],to[100005],n,t[100005],t1[100005];
 long long ans=0;
 void Merge(int s,int h,int e){
-    //printf("%d %d %d\n",s,h,e);
     int lp=s,rp=h,pos=s;
     while(lp<h&&rp<=e)
         if(t1[lp]<=t1[rp])
