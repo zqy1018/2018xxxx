@@ -13,6 +13,9 @@ int main(){
             double t=(double)i/j;
             if(t-bi>0&&t-bi<cur)
             	cur=t-bi,fz=i,fm=j;
+            else if(fabs(t-bi)<1e-8){
+            	fz=i,fm=j;break;
+			}
         }
 	int g=gcd(fz,fm);
 	fz/=g,fm/=g;
