@@ -1,2 +1,2 @@
-# 2018xxxx
-A place to keep my code... somehow.
+# 过去写的 OI 代码
+主要是 2008-2016 这 9 年的 NOIP 的题解。附带一些别的代码。
